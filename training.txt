@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 1948 - Gandhiji died
 1950 - Republic India
+=======
+1950- Constitution signed 
+>>>>>>> Junagarh
