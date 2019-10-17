@@ -1,0 +1,13 @@
+---
+- name: copy module
+  hosts: karan
+  become: yes
+
+
+  tasks: 
+    - name: copy files to host
+      copy: 
+       src: /home/centos/createUser.yml
+       dest: /home/centos/create.yml
+       remote_dest: yes
+

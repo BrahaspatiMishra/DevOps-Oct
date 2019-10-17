@@ -1,0 +1,50 @@
+---
+- name: Install yum-utils
+  hosts: karan
+  become: yes
+
+  tasks:
+    - name: Yum-Utils installation
+      yum: 
+       state: latest
+       name: 
+         - yum-utils
+         - device-mapper-persistent-data
+         - lvm2
+
+    - name: Add docker repo
+      sudo: yes
+      shell: "yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo"
+
+    - name: Install docker
+      yum: 
+        state: latest
+        name: 
+          - docker-ce 
+          - docker-ce-cli
+          - containerd.io
+
+    - name: stating docker
+      service:
+        state: started
+        name: docker
+
+    - name: Changing the ownership
+      file: 
+        path: /var/run/docker.sock
+        owner: centos
+        group: users
+
+    - name: checking docker version
+      command: docker --version
+      register: out
+
+    - name: Print docker version on screen
+      debug: var=out.stdout_lines
+
+    - name: running hello-world
+      command: docker run hello-world
+      register: out
+
+    - name: printing output
+      debug: var=out.stdout_lines

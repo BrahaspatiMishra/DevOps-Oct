@@ -1,0 +1,13 @@
+---
+- name: Validation added for failure check
+  hosts: karan
+  become: yes
+
+
+  tasks:
+    - name: Enter UserName
+      command: ls -ltr
+      register: result
+      failed_when:
+        - result.rc == 0
+        - "'Git version not matched not in result.stdout'"
